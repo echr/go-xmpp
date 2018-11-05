@@ -67,16 +67,17 @@ func (iq *IQ) Response(iqType string) *IQ {
 
 // XMPP <message/> stanza.
 type Message struct {
-	XMLName xml.Name      `xml:"message"`
-	ID      string        `xml:"id,attr,omitempty"`
-	Type    string        `xml:"type,attr,omitempty"`
-	To      string        `xml:"to,attr,omitempty"`
-	From    string        `xml:"from,attr,omitempty"`
-	Subject string        `xml:"subject,omitempty"`
-	Body    []MessageBody `xml:"body,omitempty"`
-	Thread  string        `xml:"thread,omitempty"`
-	Error   *Error        `xml:"error"`
-	Lang    string        `xml:"xml:lang,attr,omitempty"`
+	XMLName  xml.Name      `xml:"message"`
+	ID       string        `xml:"id,attr,omitempty"`
+	Type     string        `xml:"type,attr,omitempty"`
+	To       string        `xml:"to,attr,omitempty"`
+	From     string        `xml:"from,attr,omitempty"`
+	Subject  string        `xml:"subject,omitempty"`
+	Body     []MessageBody `xml:"body,omitempty"`
+	Delayed  Delay         `xml:"delay"`
+	Thread   string        `xml:"thread,omitempty"`
+	Error    *Error        `xml:"error"`
+	Lang     string        `xml:"xml:lang,attr,omitempty"`
 
 	Confirm *Confirm `xml:"confirm"` // XEP-0070
 
@@ -85,6 +86,18 @@ type Message struct {
 	Paused    *Paused    `xml:"paused"`    // XEP-0085
 	Inactive  *Inactive  `xml:"inactive"`  // XEP-0085
 	Gone      *Gone      `xml:"gone"`      // XEP-0085
+}
+
+type Delay struct {
+	Stamp string `xml:"stamp,attr"`
+}
+
+type Received struct {
+	ID string `xml:"id,attr,omitempty"`
+}
+
+type Request struct {
+	Xmlns string `xml:"xmlns,attr"`
 }
 
 type MessageBody struct {
@@ -185,7 +198,6 @@ func (e Error) Condition() ErrorCondition {
 
 // Error condition.
 type ErrorCondition xml.Name
-
 // Stanza errors.
 var (
 	ErrorFeatureNotImplemented = ErrorCondition{nsErrorStanzas, "feature-not-implemented"}
