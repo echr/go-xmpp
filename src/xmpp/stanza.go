@@ -67,17 +67,17 @@ func (iq *IQ) Response(iqType string) *IQ {
 
 // XMPP <message/> stanza.
 type Message struct {
-	XMLName  xml.Name      `xml:"message"`
-	ID       string        `xml:"id,attr,omitempty"`
-	Type     string        `xml:"type,attr,omitempty"`
-	To       string        `xml:"to,attr,omitempty"`
-	From     string        `xml:"from,attr,omitempty"`
-	Subject  string        `xml:"subject,omitempty"`
-	Body     []MessageBody `xml:"body,omitempty"`
-	Delayed  Delay         `xml:"delay"`
-	Thread   string        `xml:"thread,omitempty"`
-	Error    *Error        `xml:"error"`
-	Lang     string        `xml:"xml:lang,attr,omitempty"`
+	XMLName xml.Name      `xml:"message"`
+	ID      string        `xml:"id,attr,omitempty"`
+	Type    string        `xml:"type,attr,omitempty"`
+	To      string        `xml:"to,attr,omitempty"`
+	From    string        `xml:"from,attr,omitempty"`
+	Subject string        `xml:"subject,omitempty"`
+	Body    []MessageBody `xml:"body,omitempty"`
+	Delayed *Delay        `xml:"delay"`
+	Thread  string        `xml:"thread,omitempty"`
+	Error   *Error        `xml:"error"`
+	Lang    string        `xml:"xml:lang,attr,omitempty"`
 
 	Confirm *Confirm `xml:"confirm"` // XEP-0070
 
@@ -198,6 +198,7 @@ func (e Error) Condition() ErrorCondition {
 
 // Error condition.
 type ErrorCondition xml.Name
+
 // Stanza errors.
 var (
 	ErrorFeatureNotImplemented = ErrorCondition{nsErrorStanzas, "feature-not-implemented"}
